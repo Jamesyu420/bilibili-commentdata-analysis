@@ -19,7 +19,6 @@ def getCommentJson(aid):
             html = requests.get(url)
             data = json.loads(html.text)
             for i in range(0,20):   #每页20条评论
-                k = i + 20 * (j - 1)
                 timeArray = time.localtime(data['data']['replies'][i]['ctime'])     #时间戳
                 date.append(time.strftime("%Y-%m-%d %H:%M:%S",timeArray))
                 level.append(str(data['data']['replies'][i]['member']['level_info']['current_level']))    #用户等级
