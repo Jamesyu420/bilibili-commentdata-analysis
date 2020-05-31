@@ -1,5 +1,5 @@
 from json.decoder import JSONDecodeError
-import requests
+from requests import get
 
 BV2AV_API = 'https://api.bilibili.com/x/web-interface/view'  # ?bvid=
 HEADER = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) \
@@ -15,7 +15,7 @@ def decode_json(r):
         return response
 
 def bv2av(bv):
-    r = requests.get(BV2AV_API, {'bvid': bv}, headers=HEADER)
+    r = get(BV2AV_API, {'bvid': bv}, headers=HEADER)
     response = decode_json(r)
     try:
         return str(response['data']['aid'])
