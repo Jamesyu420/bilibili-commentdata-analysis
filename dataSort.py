@@ -9,7 +9,7 @@ def datapre(jsonfile="commentdata.json"):
     df['cut'] = pd.Series()
     # data cleaning
     df.drop_duplicates(inplace=True)
-    df.dropna(inplace=True)
+    #df.dropna(inplace=True)
     for i in range(0, df.shape[0]):
         text = df['text'].iloc[i]
         txt_cut = lcut(text, cut_all=False)
