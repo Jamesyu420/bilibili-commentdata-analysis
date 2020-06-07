@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import filedialog
 from tkinter.messagebox import *
+import tkinter.font as tf
+import operator
 from snownlp import SnowNLP
 import os
 from json.decoder import JSONDecodeError
