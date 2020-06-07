@@ -3,8 +3,8 @@ import numpy as np
 from jieba import load_userdict,lcut
 
 
-def datapre(jsonfile="commentdata.json"):
-    load_userdict("dict.txt")
+def datapre(jsonfile=r"data/commentdata.json"):
+    load_userdict(r"data/dict.txt")
     df = pd.read_json(jsonfile)
     df['cut'] = pd.Series()
     # data cleaning

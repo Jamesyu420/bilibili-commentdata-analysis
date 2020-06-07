@@ -34,5 +34,5 @@ def getCommentJson(aid):
     dict_data['level'] = level
     dict_data['text'] = text
     dict_data['like'] = like
-    saveCommentJson("commentdata.json",dict_data)
+    saveCommentJson(r"data/commentdata.json",dict_data)
 

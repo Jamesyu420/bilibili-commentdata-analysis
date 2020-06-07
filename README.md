@@ -18,6 +18,12 @@
 6. 对用户的等级分布和评论发布时间进行分析。
 7. 提供GUI图形接口，便于查询。（进行中）
 
+## 展望
+1. 大规模的API调用爬取耗时过长，可以通过多线程爬虫高速爬取
+2. 构建更准确的分类器，以实现更好的情感分析效果
+3. 挖掘更多的描述性统计图表
+4. 可以对比不同平台（如网易云音乐）评论区的热词频率
+
 ##  写在后面
 
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
