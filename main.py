@@ -126,7 +126,7 @@ def wordcloud():
     plt.subplots(figsize=(12, 8))
     plt.imshow(word_cloud)
     plt.axis("off")
-    plt.savefig("clouds.png", dpi=300)
+    plt.savefig(r"result/clouds.png", dpi=300)
     plt.show()
 
 
@@ -172,7 +172,7 @@ def draw():
     pie(df, ax1)
     scatter(df, ax2)
     timeseries(df, ax3)
-    plt.savefig("stats.png", dpi=300)
+    plt.savefig(r"result/stats.png", dpi=300)
     plt.show()
 
 
@@ -216,7 +216,7 @@ def feeling():
     ax2.set_title("用户情感时序分析")
     ax2.set_ylabel("情感")
     ax2.grid()
-    plt.savefig("sentiments.png", dpi=300)
+    plt.savefig(r"result/sentiments.png", dpi=300)
     plt.show()
 
 
