@@ -1,8 +1,7 @@
 from tkinter import *
+from tkinter.ttk import *
 from tkinter import filedialog
 from tkinter.messagebox import *
-import tkinter.font as tf
-import operator
 from snownlp import SnowNLP
 import os
 from json.decoder import JSONDecodeError
@@ -44,10 +43,10 @@ def check():
 
 
 def bv2av(bv):
-    BV2AV_API = 'https://api.bilibili.com/x/web-interface/view'  # ?bvid=
-    HEADER = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) \
+    api = 'https://api.bilibili.com/x/web-interface/view'  # ?bvid=
+    header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) \
 Chrome/80.0.3987.149 Safari/537.36'}
-    r = get(BV2AV_API, {'bvid': bv}, headers=HEADER)
+    r = get(api, {'bvid': bv}, headers=header)
     response = decode_json(r)
     try:
         print(str(response['data']['aid']))
@@ -63,7 +62,8 @@ def getCommentJson(aid):
     text = []
     like = []
     j = 1
-    while (True):
+    while True:
+        # noinspection PyBroadException
         try:
             url = "https://api.bilibili.com/x/reply?type=1&oid={0}&nohot=1&sort=0&pn={1}".format(aid, j)
             html = get(url)
@@ -78,7 +78,7 @@ def getCommentJson(aid):
                 text.append(txt)
                 like.append(str(data['data']['replies'][i]['like']))  # 赞同数
             j += 1
-        except:
+        except Exception:
             break
     dict_data['date'] = date
     dict_data['level'] = level
@@ -129,28 +129,28 @@ def wordcloud():
     plt.show()
 
 
-def pie(df, ax):
+def pie(data, ax):
     # 用户等级饼状图——视频受众分析
-    x = df['level'].value_counts().sort_index(ascending=True)
+    x = data['level'].value_counts().sort_index(ascending=True)
     ax.pie(x, labels=list(x.index), startangle=180, shadow=True, autopct='%1.2f%%')
     ax.set(title="评论等级分布")
     ax.grid()
 
 
-def scatter(df, ax):
-    x = df['level'].sort_index(ascending=True)
-    y = df['like'].sort_index(ascending=True)
+def scatter(data, ax):
+    x = data['level'].sort_index(ascending=True)
+    y = data['like'].sort_index(ascending=True)
     ax.scatter(x, y, marker='.')
     ax.set_title("等级——点赞散点图")
     ax.grid()
 
 
-def timeseries(df, ax):
+def timeseries(data, ax):
     # 评论等级时间序列图——谁在主导舆论？
     # 现存问题：时间序列没有同时兼容久远的视频和近期视频，显示效果不佳
-    x = df['date']
-    y = df['level']
-    ax.plot_date(x, y,)
+    x = data['date']
+    y = data['level']
+    ax.plot_date(x, y, )
     ax.xaxis.set_major_formatter(DateFormatter('%Y-%m-%d'))
     ax.xaxis.set_major_locator(AutoDateLocator(maxticks=8))
     ax.legend(['评论'], loc='upper right')
@@ -171,9 +171,8 @@ def draw():
     pie(df, ax1)
     scatter(df, ax2)
     timeseries(df, ax3)
-    plt.savefig("stats.png",dpi=300)
+    plt.savefig("stats.png", dpi=300)
     plt.show()
-
 
 
 def dataFind():
@@ -185,6 +184,7 @@ def dataFind():
     datapre(filepath)
     flag = True
 
+
 def feeling():
     global df
     df['sentiments'] = pd.Series(dtype=np.float64)
@@ -192,14 +192,14 @@ def feeling():
     for i in range(0, df.shape[0]):
         text = SnowNLP(df['text'].iloc[i])
         df['sentiments'].iloc[i] = text.sentiments
-        if(text.sentiments>0.7):
+        if text.sentiments > 0.7:
             df['result'].iloc[i] = "积极"
         else:
             df['result'].iloc[i] = "消极"
     plt.rcParams['font.sans-serif'] = ['SimHei']
     plt.rcParams['axes.unicode_minus'] = False
     fig = plt.figure("情感分析")
-    fig.set_size_inches(6,6)
+    fig.set_size_inches(6, 6)
     ax1 = fig.add_subplot(211)
     ax2 = fig.add_subplot(212)
     x = df['result'].value_counts().sort_index(ascending=True)
@@ -208,14 +208,14 @@ def feeling():
     ax1.grid()
     p = df['date']
     q = df['result']
-    ax2.plot_date(p,q)
+    ax2.plot_date(p, q)
     ax2.xaxis.set_major_formatter(DateFormatter('%Y-%m-%d'))
     ax2.xaxis.set_major_locator(AutoDateLocator(maxticks=8))
     ax2.legend(['评论'], loc='upper right')
     ax2.set_title("用户情感时序分析")
     ax2.set_ylabel("情感")
     ax2.grid()
-    plt.savefig("sentiments.png",dpi=300)
+    plt.savefig("sentiments.png", dpi=300)
     plt.show()
 
 
@@ -237,26 +237,26 @@ load_userdict(r"data/dict.txt")
 
 window = Tk()
 window.title("后浪入海——哔哩哔哩视频数据分析")
-window.geometry("600x350+250+150")
-frm = Frame(window, bg='purple')
+window.geometry("550x300+250+150")
+frm = Frame(window)
 frm.grid()
 frm_top = Frame(frm)
 frm_top.grid(row=0, column=0)
 frm_bottom = Frame(frm)
 frm_bottom.grid(row=1, column=0)
-Label(frm_top, text="AV/BV号", font=12).grid(row=1, column=0, ipadx=10, ipady=5, padx=20, pady=20)
+Label(frm_top, text="AV/BV号").grid(row=1, column=0, ipadx=10, ipady=5, padx=20, pady=20)
 entry_msg = Entry(frm_top, width=40)
 entry_msg.grid(row=1, column=1)
-btn_Get = Button(frm_top, text="获取评论", font=12, command=datapre)
+btn_Get = Button(frm_top, text="获取评论", command=datapre)
 btn_Get.grid(row=1, column=3, ipadx=10, ipady=5, padx=20, pady=20)
-btn_exist = Button(frm_bottom, text="导入数据", font=12, command=dataFind)
-btn_exist.grid(row=1, column=1, ipadx=25, ipady=10, padx=20, pady=20)
-btn_cloud = Button(frm_bottom, text="生成词云", font=12, command=wordcloud)
-btn_cloud.grid(row=1, column=2, ipadx=25, ipady=10, padx=20, pady=20)
-btn_analy = Button(frm_bottom, text="用户分析", font=12, command=draw)
-btn_analy.grid(row=2, column=1, ipadx=25, ipady=10, padx=20, pady=20)
-btn_feel = Button(frm_bottom,text="情感分析",font=12, command=feeling)
-btn_feel.grid(row=2,column=2,ipadx=25, ipady=10, padx=20, pady=20)
+btn_exist = Button(frm_bottom, text="导入数据", command=dataFind)
+btn_exist.grid(row=1, column=1, ipadx=30, ipady=15, padx=20, pady=20)
+btn_cloud = Button(frm_bottom, text="生成词云", command=wordcloud)
+btn_cloud.grid(row=1, column=2, ipadx=30, ipady=15, padx=20, pady=20)
+btn_analy = Button(frm_bottom, text="用户分析", command=draw)
+btn_analy.grid(row=2, column=1, ipadx=30, ipady=15, padx=20, pady=20)
+btn_feel = Button(frm_bottom, text="情感分析", command=feeling)
+btn_feel.grid(row=2, column=2, ipadx=30, ipady=15, padx=20, pady=20)
 
 menubar = Menu(window)
 startmenu = Menu(menubar)
