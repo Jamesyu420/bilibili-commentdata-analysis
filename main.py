@@ -43,16 +43,17 @@ def check():
 
 
 def bv2av(bv):
-    api = 'https://api.bilibili.com/x/web-interface/view'  # ?bvid=
-    header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) \
-Chrome/80.0.3987.149 Safari/537.36'}
-    r = get(api, {'bvid': bv}, headers=header)
-    response = decode_json(r)
-    try:
-        print(str(response['data']['aid']))
-        return str(response['data']['aid'])
-    except (KeyError, TypeError):
-        return False
+    table = 'fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF'
+    tr = {}
+    for i in range(58):
+        tr[table[i]] = i
+    s = [11, 10, 3, 8, 4, 6]
+    xor = 177451812
+    add = 8728348608
+    r = 0
+    for i in range(6):
+        r += tr[bv[s[i]]] * 58 ** i
+    return (r - add) ^ xor
 
 
 def getCommentJson(aid):

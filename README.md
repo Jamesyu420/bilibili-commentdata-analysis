@@ -7,6 +7,7 @@
 灵感来自互联网上对哔哩哔哩官方视频[《后浪》](https://www.bilibili.com/video/BV1FV411d7u7)的广泛争论，我想要对[哔哩哔哩视频网](https://www.bilibili.com/)（以下简称b站）评论区的反应进行数据分析。刚好这时b站推出了第二弹视频[《入海》](https://www.bilibili.com/video/BV1tC4y1H7yz)，我想可以进行对比分析。然而听说还可能有第三弹，于是决定干脆将其做成一个对b站任意视频评论区进行数据分析的小工具，然后用它进行分析研究。
 
 ## 技术路线
+
 1. requests爬取数据
 2. numpy和pandas实现数据预处理
 3. jieba分词，wordcloud辅助Pillow库实现词云
@@ -24,12 +25,13 @@
 7. 提供GUI图形接口，便于查询。
 
 ## 展望
+
 1. 大规模的API爬取耗时过长，可以通过多线程爬虫高速爬取
 2. 自己构建更准确的分类器，以实现更好的情感分析效果
 3. 挖掘更多的描述性统计图表
 4. 可以对比不同平台（如网易云音乐）评论区的热词频率，进而分析不同软件受众的特点
 
-##  写在后面
+## 写在后面
 
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
