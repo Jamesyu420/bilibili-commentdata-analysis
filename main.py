@@ -133,7 +133,7 @@ def wordcloud():
 def pie(data, ax):
     # 用户等级饼状图——视频受众分析
     x = data['level'].value_counts().sort_index(ascending=True)
-    ax.pie(x, labels=list(x.index), startangle=180, shadow=True, autopct='%1.2f%%')
+    ax.pie(x, labels=list(x.index), autopct='%1.2f%%')
     ax.set(title="评论等级分布")
     ax.grid()
 
@@ -204,7 +204,7 @@ def feeling():
     ax1 = fig.add_subplot(211)
     ax2 = fig.add_subplot(212)
     x = df['result'].value_counts().sort_index(ascending=True)
-    ax1.pie(x, labels=list(x.index), startangle=180, shadow=True, autopct='%1.2f%%')
+    ax1.pie(x, labels=list(x.index), autopct='%1.2f%%')
     ax1.set(title="情感分析饼状图")
     ax1.grid()
     p = df['date']

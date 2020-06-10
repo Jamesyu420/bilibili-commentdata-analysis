@@ -33,6 +33,8 @@
 
 ## 写在后面
 
+注：所有markdown文档的图片均需科学上网查看。
+
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 [MIT](LICENSE) © Jamesyu420
